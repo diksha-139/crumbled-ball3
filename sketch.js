@@ -4,6 +4,7 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 var dustbin;
+var chain;
 function preload()
 {
 	dustbin= loadImage("dustbingreen.png")
@@ -28,6 +29,7 @@ ground= new Ground(600,490,1200,10)
 d1= new Dustbin(1000,480,300,10)
 d2= new Dustbin(900,400,10,150)
 d3 = new Dustbin(1100,400,10,150)
+chain= new Slingshot(paper.body,{x:200,y: 100})
 
 
 	Engine.run(engine);
@@ -46,6 +48,7 @@ function draw() {
  d3.display()
  imageMode(CENTER);
  image(dustbin,1000,380,300,200)
+ chain.display()
 }
 
 
@@ -57,4 +60,12 @@ if(keyCode === UP_ARROW){
 if(keyCode === DOWN_ARROW){
 	Matter.Body.applyForce(paper.body,paper.body.position,{x:-105,y:-105})
 }
+}
+
+function mouseDragged(){
+	Matter.Body.setPosition(paper.body,{x: mouseX, y: mouseY})
+}
+
+function mouseReleased(){
+	chain.fly()
 }
